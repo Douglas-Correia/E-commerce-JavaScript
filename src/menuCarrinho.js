@@ -1,6 +1,7 @@
-import { catalogo } from "./utilidades";
+import { catalogo, salvarLocalStorage , lerLocalStorage } from "./utilidades";
 
-const idsProdutoCarrinhoComQuantidade = {}; // Dicionário para guardar a quantidade do carrinho
+// Usando operadpr de coalessense, básicamente ele serve para, se existir o da esquerda executa primeiro, se não o outro
+const idsProdutoCarrinhoComQuantidade = lerLocalStorage('carrinho') ?? {}; // Dicionário para guardar a quantidade do carrinho
 
 function fecharCarrinho(){
     document.querySelector("#carrinho").classList.remove("right-[0px]");
@@ -20,11 +21,15 @@ export function inicializarCarrinho(){
 
 function removerDoCarrinho(idProduto){
     delete idsProdutoCarrinhoComQuantidade[idProduto]; // Deletar o produto correto do docionário
+    salvarLocalStorage('carrinho', idsProdutoCarrinhoComQuantidade); // Estamos passando a chave e o dicionários para salvar 
+    atualizarPrecoCarrinho();
     renderizarProdutoCarrinho();
 };
 
 function incrementarQuantidadeProduto(idProduto){
     idsProdutoCarrinhoComQuantidade[idProduto]++; // Adicionando uma chave id e a quantidade no dicionário
+    salvarLocalStorage('carrinho', idsProdutoCarrinhoComQuantidade); // Estamos passando a chave e o dicionários para salvar 
+    atualizarPrecoCarrinho();
     atualizarIformacaoQuantidade(idProduto); // Chamando a função e passando o id para atualizar
 };
 
@@ -36,6 +41,8 @@ function decrementarQuantidadeProduto(idProduto){
     } 
 
     idsProdutoCarrinhoComQuantidade[idProduto]--; // Adicionando uma chave id e a quantidade no dicionário
+    salvarLocalStorage('carrinho', idsProdutoCarrinhoComQuantidade); // Estamos passando a chave e o dicionários para salvar 
+    atualizarPrecoCarrinho();
     atualizarIformacaoQuantidade(idProduto); // Chamando a função e passando o id para atualizar
 };
 
@@ -78,7 +85,7 @@ function desenharProdutoNoCarrinho(idProduto){
     document.querySelector(`#remover-item-${produto.id}`).addEventListener('click', () => removerDoCarrinho(produto.id));
 };
 
-function renderizarProdutoCarrinho(){
+export function renderizarProdutoCarrinho(){
     // Nesta função estamos pegando a section do html e deixando ela vazia para renderizar de forma correta
     const containerProdutosCarrinho = document.querySelector("#produtos-carrinho");
     containerProdutosCarrinho.innerHTML = "";
@@ -96,5 +103,18 @@ export function adicionarCarrinho(idProduto){
     }
 
     idsProdutoCarrinhoComQuantidade[idProduto] = 1; // Iniciando o contador com 1 para poder acrescentar
+    salvarLocalStorage('carrinho', idsProdutoCarrinhoComQuantidade); // Estamos passando a chave e o dicionários para salvar 
     desenharProdutoNoCarrinho(idProduto);
+    atualizarPrecoCarrinho();
 };
+
+export function atualizarPrecoCarrinho(){
+    const precoCarrinho = document.querySelector("#preco-total");
+
+    let precoTotalCarrinho = 0;
+
+    for(const idProdutoNoCarrinho in idsProdutoCarrinhoComQuantidade){
+        precoTotalCarrinho += catalogo.find((p)=> p.id === idProdutoNoCarrinho).preco * idsProdutoCarrinhoComQuantidade[idProdutoNoCarrinho]; // Nesta linha estamos somando o valor dos produtos que estão no carrinho, passando linha por linha
+    }
+    precoCarrinho.innerText = `Total: R$ ${precoTotalCarrinho},00`;
+}
