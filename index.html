@@ -6,7 +6,7 @@
     <title>Magazine Hashtag</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<body>
+<body class="bg-stone-200 flex flex-col">
     <section id="carrinho" class="fixed top-0 right-[-360px] bg-indigo-950 h-screen w-[360px] text-slate-200 duration-200 border-l border-slate-200 p-5 flex flex-col justify-between">
 
         <div id="cabecalho-carrinho" class="flex justify-between m-4">
@@ -19,18 +19,35 @@
             
         </section>
             <p id="preco-total" class="bg-slate-200 text-green-700 rounded-sm pl-5">R$ 0,00</p>
-            <button class="bg-slate-200 text-slate-900">Finalizar venda</button>
+            <button id="finalizar-compra" class="bg-slate-200 text-slate-900 hover:bg-slate-900 hover:text-slate-200 rounded-sm">Finalizar venda</button>
         </section>
 
-    <header class="flex bg-indigo-950 justify-between stick top-0 z-10">
-        <img class="h-16 p-3" src="./assets/logo/hashtag.svg" alt="Logo da Magazine">
+    <header class="flex text-xl bg-slate-950 shadow-slate-400 px-8 py-4 justify-between stick top-0 z-10">
+        <a href="/"><img class="h-16 p-3" src="./assets/logo/hashtag.svg" alt="Logo da Magazine"></a>
         <div class="text-slate-200 flex gap-2 items-end mx-2">
             <button id="abrir-carrinho"><i class="fa-solid fa-cart-shopping"></i></button>
-            <button><i class="fa-solid fa-user"></i></button>
+            <a href="/pedidos.html"><button><i class="fa-solid fa-user"></i></button></a>
         </div>
     </header>
         
-    <main>
+    <main class="flex flex-col items-center">
+        <section id="filtros" class="p-10 flex ">
+            <div class="px-2">
+                <input type="radio" name="filtro" id="exibir-todos" class="peer hidden" checked/> <!-- Esse pear se relaciona com o input abaixo-->
+                <label for="exibir-todos" class="peer-checked:bg-slate-950 peer-checked:text-slate-200 peer-checked:font-bold p-2 rounded-xl select-none cursor-pointer">Todos</label>
+            </div>
+            
+            <div class="px-2">
+                <input type="radio" name="filtro" id="exibir-masculinos" class="peer hidden"><!-- Esse pear se relaciona com o input abaixo-->
+                <label for="exibir-masculinos" class="peer-checked:bg-slate-950 peer-checked:text-slate-200 peer-checked:font-bold p-2 rounded-xl select-none cursor-pointer">Masculino</label>
+            </div>
+            
+            <div class="px-2">
+                <input type="radio" name="filtro" id="exibir-femininos" class="peer hidden"><!-- Esse pear se relaciona com o input abaixo-->
+                <label for="exibir-femininos" class="peer-checked:bg-slate-950 peer-checked:text-slate-200 peer-checked:font-bold p-2 rounded-xl select-none cursor-pointer">Feminino</label>
+            </div>
+        </section>
+            
         <section id="container-produtos" class="flex flex-wrap">
             
         </section>

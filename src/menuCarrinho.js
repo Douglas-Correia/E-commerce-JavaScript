@@ -13,10 +13,20 @@ function abrirCarrinho(){
     document.querySelector("#carrinho").classList.remove("right-[-360px]");
 };
 
+function irParaCheckout(){
+    // Verficiando se o objeto localStorage está vazio
+    if(Object.keys(idsProdutoCarrinhoComQuantidade).length === 0){
+        return;
+    }
+
+    // Vamos passar o local do checkout.html
+    window.location.href = window.location.origin + '/checkout.html';
+}
 
 export function inicializarCarrinho(){
     document.querySelector("#fechar-carrinho").addEventListener('click', fecharCarrinho);
     document.querySelector("#abrir-carrinho").addEventListener('click', abrirCarrinho);
+    document.querySelector("#finalizar-compra").addEventListener('click', irParaCheckout);
 };
 
 function removerDoCarrinho(idProduto){
